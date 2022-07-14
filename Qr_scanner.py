@@ -1,6 +1,9 @@
 import cv2
 import time
 import paho.mqtt.client as mqtt
+import RPi.GPIO as GPIO
+
+buzzer_pin = 4
 
 ha_host = '192.168.1.139'
 port = 1883
@@ -12,6 +15,9 @@ ha_pass = "ha_pass"
 
 def on_connect(client, userdata, flags, rc):
   print("error = "+str(rc))
+  
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(buzzer_pin, GPIO.OUT)
 
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -41,6 +47,10 @@ while True:
         if data:                                                                                           
             print("data found: ", data)
             client.publish(topic, data, 0)
+            buzz = GPIO.PWM(buzzer_pin, 4186)
+            buzz.start(50)
+            time.sleep(0.2)
+            buzz.start(0)
             time.sleep(4)	
 			
 # free camera object and exit  

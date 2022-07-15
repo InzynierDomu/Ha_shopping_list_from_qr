@@ -4,6 +4,7 @@ import paho.mqtt.client as mqtt
 import RPi.GPIO as GPIO
 
 buzzer_pin = 4
+button_pin = 4
 
 ha_host = '192.168.1.139'
 port = 1883
@@ -18,6 +19,7 @@ def on_connect(client, userdata, flags, rc):
   
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(buzzer_pin, GPIO.OUT)
+GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -44,16 +46,17 @@ while True:
 #                     0, 255), thickness=2)                                                                 
 #        cv2.putText(img, data, (int(bbox[0][0][0]), int(bbox[0][0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX,    
 #                    0.5, (0, 255, 0), 2)                                                                   
-        if data:                                                                                           
-            print("data found: ", data)
-            client.publish(topic, data, 0)
-            buzz = GPIO.PWM(buzzer_pin, 4186)
-            buzz.start(50)
-            time.sleep(0.2)
-            buzz.start(0)
-            time.sleep(4)	
+        if data:
+            if (GPIO.input(button_pin) == 1):
+                print("data found: ", data)
+                client.publish(topic, data, 0)
+                buzz = GPIO.PWM(buzzer_pin, 4186)
+                buzz.start(50)
+                time.sleep(0.2)
+                buzz.start(0)
+                time.sleep(4)	
 			
 # free camera object and exit  
 client.disconnect()                                                         
 cap.release()                                                                                              
-cv2.destroyAllWindows()
+cv2.destroyAllWindows() 

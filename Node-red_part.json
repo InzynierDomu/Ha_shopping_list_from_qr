@@ -1,0 +1,87 @@
+[
+    {
+        "id": "644cf1832c1b77b4",
+        "type": "api-call-service",
+        "z": "fcabf4bb23dc5442",
+        "name": "",
+        "server": "a81b0a9b.fdab98",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "shopping_list",
+        "service": "add_item",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"name\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1560,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c6e21bfc50d84133",
+        "type": "mqtt in",
+        "z": "fcabf4bb23dc5442",
+        "name": "",
+        "topic": "test/shopping",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "6c158e685eb08d0e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1290,
+        "y": 500,
+        "wires": [
+            [
+                "644cf1832c1b77b4"
+            ]
+        ]
+    },
+    {
+        "id": "a81b0a9b.fdab98",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 2,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": 30
+    },
+    {
+        "id": "6c158e685eb08d0e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]

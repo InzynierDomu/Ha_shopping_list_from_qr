@@ -17,8 +17,12 @@ Raspberry scaning QR code and send content via MQTT to Node-Red on Home Assistan
 - Raspberry Pi Camera (Rev 1.3 or higer)
 - Button/microswitch
 - Buzzer
-
+,,,
 ## Install
 Script running on Raspberry Pi wiht Raspbian.
-//todo: install cv2
-//todo: install paho mqtt
+Script required Python 3 and packages. To install packages use pip.
+pip install --upgrade pip
+- Install cv2
+pip install opencv-python
+- Install paho mqtt
+pip install paho-mqtt

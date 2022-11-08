@@ -33,6 +33,6 @@ while True:
     mycursor.execute(sql)
     myresult = mycursor.fetchone()
     print(myresult)
-    client.publish(topic, data, 0)                
+    client.publish(topic, myresult, 0)                
 
 client.disconnect()                                                         

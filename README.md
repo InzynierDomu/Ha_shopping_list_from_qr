@@ -14,15 +14,23 @@ Raspberry scaning QR code and send content via MQTT to Node-Red on Home Assistan
 
 ## Scheme
 - Raspberry pi zero W 2
-- Raspberry Pi Camera (Rev 1.3 or higer)
-- Button/microswitch
-- Buzzer
-,,,
+- QR scanner
+
 ## Install
 Script running on Raspberry Pi wiht Raspbian.
+
+TODO:
+description about MySQL and NGINX
+
 Script required Python 3 and packages. To install packages use pip.
+```sh
 pip install --upgrade pip
-- Install cv2
-pip install opencv-python
+```
+- Install MyQSL connection
+```sh
+python -m pip install mysql-connector-python
+```
 - Install paho mqtt
+```sh
 pip install paho-mqtt
+```

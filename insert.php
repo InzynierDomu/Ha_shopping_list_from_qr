@@ -1,57 +1,25 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-if (isset($_POST['submit'])) {
-    if (isset($_POST['code']) && isset($_POST['name'])) 
-	{    
-        $code = $_POST['code'];
-        $name = $_POST['name'];
-        
-        $host = "localhost";
-        $dbUsername = "root";
-        $dbPassword = "root";
-        $dbName = "qr";
-        $conn = new mysqli($host, $dbUsername, $dbPassword, $dbName);
-        if ($conn->connect_error) {
-            die('Could not connect to the database.');
-        }
-        else {
-            $Select = "SELECT name FROM codes WHERE code = ? LIMIT 1";
-            $Insert = "INSERT INTO codes(code, name) values(?, ?)";
-            $stmt = $conn->prepare($Select);
-            $stmt->bind_param("s", $code);
-            $stmt->execute();
-            $stmt->bind_result($resultCode);
-            $stmt->store_result();
-            $stmt->fetch();
-            $rnum = $stmt->num_rows;
-            if ($rnum == 0) {
-                $stmt->close();
-                $stmt = $conn->prepare($Insert);
-                $stmt->bind_param("ss",$code, $name);
-                if ($stmt->execute()) {
-                    echo "New record inserted sucessfully.";
-                }
-                else {
-                    echo $stmt->error;
-                }
-            }
-            else {
-                echo "This code is in database";
-            }
-            $stmt->close();
-            $conn->close();
-        }
-    }
-    else {
-        echo "All field are required.";
-        die();
-    }
+/* Attempt MySQL server connection. Assuming you are running MySQL
+server with default setting (user 'root' with no password) */
+$link = mysqli_connect("localhost", "root", "root", "qr");
+ 
+// Check connection
+if($link === false){
+    die("ERROR: Could not connect. " . mysqli_connect_error());
 }
-else {
-    echo "Submit button is not set";
+ 
+// Escape user inputs for security
+$code = mysqli_real_escape_string($link, $_REQUEST['code']);
+$name = mysqli_real_escape_string($link, $_REQUEST['name']);
+ 
+// Attempt insert query execution
+$sql = "INSERT INTO codes (code, name) VALUES ('$code', '$name')";
+if(mysqli_query($link, $sql)){
+    echo "Records added successfully.";
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 }
+ 
+// Close connection
+mysqli_close($link);
 ?>

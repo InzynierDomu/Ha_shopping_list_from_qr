@@ -11,8 +11,8 @@ if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         
         $host = "localhost";
-        $dbUsername = "scaner";
-        $dbPassword = "scan";
+        $dbUsername = "root";
+        $dbPassword = "root";
         $dbName = "qr";
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbName);
         if ($conn->connect_error) {
